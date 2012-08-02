@@ -44,7 +44,7 @@ class Ondango
 			die ("Fatal error: Missing argument 1 for Ondango::{$method}(). You have to provide a api url (see: http://apidocs.ondango.com");
 		}
         
-		if (OndangoExtendedFunctions::is_extended_function($args[0]))
+        if (OndangoExtendedFunctions::is_extended_function($args[0]))
         {
             return OndangoExtendedFunctions::request($method,$args[0],$this->init_params ($args[1])) ;
             
