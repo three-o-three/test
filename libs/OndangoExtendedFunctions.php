@@ -10,7 +10,7 @@ class OndangoExtendedFunctions
                                        );
     
     
-    public static function is_extended_function($url)
+    public static function is_extended_function ($url)
     {
         if (in_array($url,array_keys(self::$extended_functions)))
         {
@@ -23,7 +23,7 @@ class OndangoExtendedFunctions
     
     // delegate request
     
-    public static function request($method, $url,$params)
+    public static function request ($method, $url,$params)
     {
         $function=self::$extended_functions[$url];
         return self::$function($method, $url,$params);
@@ -31,7 +31,7 @@ class OndangoExtendedFunctions
     
     // custom (static) functions here
     
-    public function test($method, $url, $params = array ())
+    public function test ($method, $url, $params = array ())
     {
         return array("Hi there =)");
     }
@@ -58,7 +58,7 @@ class OndangoExtendedFunctions
 				{
                     $p_id = $v2['Sales']['Sale'][0]['product_id'];
                     
-                    if(array_key_exists($p_id, $best_sellers))
+                    if(array_key_exists ($p_id, $best_sellers))
 					{					
                         
                         $best_sellers[$p_id]["quantity"] += 1; 
@@ -76,40 +76,40 @@ class OndangoExtendedFunctions
         }
         
         
-        arsort($best_sellers);
+        arsort ($best_sellers);
         
-        $best_sellers=array_slice($best_sellers,0, $params["limit"],true);
+        $best_sellers=array_slice ($best_sellers,0, $params["limit"],true);
         
         
-        if( isset($params['fields']) )
+        if (isset ($params['fields']))
         {
             $categories=array();
-            $params['product_id']=implode(",",array_keys($best_sellers));
+            $params['product_id']=implode (",",array_keys($best_sellers));
             $request = new OndangoRequest ($method, "/products", $params);
             $data =  json_decode ($request->execute (),1);
             
-            if($data['is_error']==1)
+            if ($data['is_error']==1)
             {
                 die ("Fatal error: server time out");
             }
             
-            foreach($data['data'] as $k=>$v){
+            foreach ($data['data'] as $k=>$v){
                 
-                $best_sellers[$v["Product"]["product_id"]]=array_merge( $best_sellers[$v["Product"]["product_id"]], array_intersect_key($v["Product"],array_flip($params['fields']) ));
+                $best_sellers[$v["Product"]["product_id"]]=array_merge ($best_sellers[$v["Product"]["product_id"]], array_intersect_key($v["Product"],array_flip($params['fields'])));
                 $categories[]=$v["Product"]["category_id"];
                 
             }
             
         }
         
-        if( (isset($params['fetch_category_name'])) AND ( $params['fetch_category_name']=='true' ))
+        if ((isset ($params['fetch_category_name'])) AND ( $params['fetch_category_name']=='true' ))
         {
             
-            $params['category_id']=implode(",",array_unique($categories));
+            $params['category_id']=implode (",",array_unique($categories));
             $request = new OndangoRequest ($method, "/categories", $params);
             $data =  json_decode ($request->execute (),1);
             
-            if($data['is_error']==1)
+            if ($data['is_error']==1)
             {
                 die ("Fatal error: server time out");
             }
