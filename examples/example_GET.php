@@ -12,13 +12,6 @@ $api_key = "f877615136d70e0ffc2fb224d5872d6a8fd2xbxx";
 $api_secret = null;	// optional
 $ondango = new Ondango ($api_key, $api_secret);
 $limit = 10;
-// Retrieve products best sellers from a store
-// See: http://apidocs.ondango.com/rest/sales/all/get.php
-
-// Display results
-
-//hello/ondango
-
 
 $bestSellers = $ondango->GET( 'hello/ondango', array(
                                                      'shop_id' => 87,
